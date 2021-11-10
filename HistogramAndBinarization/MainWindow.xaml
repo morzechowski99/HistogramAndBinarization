@@ -1,0 +1,81 @@
+﻿<Window x:Class="HistogramAndBinarization.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:local="clr-namespace:HistogramAndBinarization"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="Plik">
+                    <MenuItem Click="OpenFileClick" Header="Otwórz"></MenuItem>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <Image  Name="Orginal" Stretch="None"></Image>
+                </ScrollViewer>
+                <StackPanel Grid.Row="1" Margin="10" Orientation="Vertical">
+                    <Label>Skala</Label>
+                    <Slider  Maximum="10" Minimum="0.05"  Value="1" TickPlacement="None" TickFrequency="0.1" Padding="5" Name="Scale1" 
+                IsSnapToTickEnabled="True" ValueChanged="Slider1_ValueChanged"/>
+                </StackPanel>
+                <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <Image  Name="AfterFiltering" Stretch="None"></Image>
+                </ScrollViewer>
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="10" Orientation="Vertical">
+                    <Label>Skala</Label>
+                    <Slider  Maximum="10" Minimum="0.05"  Value="1" TickPlacement="None" TickFrequency="0.1" Padding="5" Name="Scale2" 
+                IsSnapToTickEnabled="True" ValueChanged="Slider2_ValueChanged"/>
+                </StackPanel>
+            </Grid>
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Margin="2" Orientation="Vertical">
+                        <Button Margin="3" Click="HistogramExtending">Rozciągnięcie histogramu</Button>
+                        <Button Margin="3" Click="HistogramEqualization">Wyrównanie histogramu</Button>
+                        <TextBox Margin="3" Name="TreshholdValue"></TextBox>
+                        <Button Margin="3" Click="TreshholdByValue">Binaryzacja (próg)</Button>
+                        <TextBox Margin="3" Name="TreshholdPercent"></TextBox>
+                        <Button Margin="3" Click="TreshholdByPercent">Binaryzacja (procentowa selekcja)</Button>
+                    </StackPanel>
+                    <lvc:CartesianChart Grid.Row="1" Series="{Binding SeriesCollection}" LegendLocation="None" >
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="" MinValue="0" Labels=""></lvc:Axis>
+                        </lvc:CartesianChart.AxisY>
+                        
+                    </lvc:CartesianChart>
+                </Grid>
+               
+                
+            </ScrollViewer>
+
+        </Grid>
+    </Grid>
+</Window>
